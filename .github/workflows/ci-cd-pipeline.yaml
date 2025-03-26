@@ -4,10 +4,15 @@ on:
     push: 
         branches:
             - main 
+        tags:
+            - '*'
     workflow_dispatch:
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    env:
+        DIOGO: COOL
+        IMAGE_TAG: ${{ github.sha }}
     steps:
         - name: Checkout Code
           uses: actions/checkout@v4
@@ -35,7 +40,7 @@ jobs:
           run: |
             sudo apt-get update
             sudo apt-get install -y gettext-base
-            export IMAGE_NAME="docker.io/${{ secrets.DOCKER_USERNAME }}/simple-node-app:latest"
+            export IMAGE_NAME="docker.io/${{ secrets.DOCKER_USERNAME }}/simple-node-app:${{ env.IMAGE_TAG }}"
             envsubst < deployment.template.yaml > deployment.yaml
             echo "Final deployment:"
             cat deployment.yaml
