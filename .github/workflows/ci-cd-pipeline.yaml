@@ -27,7 +27,7 @@ jobs:
           uses: docker/build-push-action@v6
           with:
             push: true
-            tags: ${{ secrets.DOCKER_USERNAME }}/simple-node-app:latest
+            tags: ${{ secrets.DOCKER_USERNAME }}/simple-node-app:${{ env.IMAGE_TAG }}
 
         - name: Configure AWS Credentials
           uses: aws-actions/configure-aws-credentials@v4
